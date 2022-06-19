@@ -1,6 +1,6 @@
 {
-  "name": "svg2vue",
-  "version": "0.1.0",
+  "name": "icon2vue",
+  "version": "0.1.1",
   "type": "module",
   "description": "Svg to vue component",
   "main": "dist/index.cjs",
@@ -13,7 +13,7 @@
   },
   "types": "dist/index.d.ts",
   "bin": {
-    "svg2vue": "bin/svg2vue.js"
+    "icon2vue": "bin/icon2vue.js"
   },
   "files": [
     "dist"

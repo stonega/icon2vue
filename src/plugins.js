@@ -1,4 +1,4 @@
-import { detachNodeFromParent } from 'svgo/lib/xast'
+import { detachNodeFromParent } from 'svgo/lib/xast.js'
 
 export function removePlogonWithoutStyle() {
   return {
@@ -21,7 +21,6 @@ export function updateTitle(root, params) {
     element: {
       enter: (node, parentNode) => {
         if (node.name === 'title' && parentNode.name === 'svg') {
-          console.log(params.title)
           node.children[0].value = params.title
         }
       },
