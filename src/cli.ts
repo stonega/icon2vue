@@ -11,7 +11,7 @@ const flags = minimist(arguments_, {
   },
 })
 
-console.log(c.cyan(`svg2vue v${version}`))
+console.log(c.green(`icon2vue v${version}`))
 
 const command = flags._[0]
 const { input, output } = flags

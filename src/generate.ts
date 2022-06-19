@@ -8,7 +8,7 @@ import { getClassName } from './utils'
 
 export async function generate(input: string, output: string) {
   if (input == undefined) {
-    console.error(c.cyan('Pleaes choose svg'))
+    console.error(c.red('Pleaes choose svg'))
     return
   }
   const root = process.cwd()
@@ -17,12 +17,11 @@ export async function generate(input: string, output: string) {
   const fileName = output.split('/').pop()?.split('.')[0]
 
   if (fileName == undefined) {
-    console.error(c.cyan('Wrong path'))
+    console.error(c.red('Wrong path'))
     return
   }
   const className = getClassName(fileName)
   const svgString = fs.readFileSync(sourceFilePath)
-  console.log(svgString)
   const updateTitlePlugin = {
     name: 'updateTitle',
     type: 'visitor',
@@ -89,12 +88,13 @@ export async function generate(input: string, output: string) {
         '',
       )
     }
-    console.log(optimizedSvgString)
     const vueScript = script(fileName)
     const vueTemplate = template(optimizedSvgString)
     const vueStyle = style(className)
 
     fs.writeFileSync(targetFilePath, vueTemplate + vueScript + vueStyle)
+
+    console.log(c.green('🎉 Generate successfully!'))
   } else {
     console.error(c.cyan(result.error))
     return
