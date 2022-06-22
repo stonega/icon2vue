@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import c from 'picocolors'
-import { optimize } from 'svgo'
+import { AddClassesToSVGElementPlugin, optimize } from 'svgo'
 import { removePlogonWithoutStyle, updateTitle } from './plugins'
 import { script, style, template } from './template'
 import { getClassName } from './utils'
@@ -39,18 +39,19 @@ export async function generate(input: string, output: string) {
   }
   const result = optimize(svgString, {
     plugins: [
-      'removeDimensions',
-      'removeUselessStrokeAndFill',
-      'cleanupIDs',
-      'removeStyleElement',
-      'removeUselessDefs',
-      'collapseGroups',
       {
-        name: 'convertTransform',
+        name: 'preset-default',
         params: {
-          collapseIntoOne: true,
+          overrides: {
+            removeTitle: false,
+            convertTransform: {
+              collapseIntoOne: true,
+            },
+          },
         },
       },
+      'removeDimensions',
+      'removeStyleElement',
       {
         name: 'removeAttrs',
         params: {
@@ -59,10 +60,11 @@ export async function generate(input: string, output: string) {
       },
       {
         name: 'addClassesToSVGElement',
+        active: true,
         params: {
           className: className,
         },
-      },
+      } as AddClassesToSVGElementPlugin,
       {
         name: 'addAttributesToSVGElement',
         params: {
